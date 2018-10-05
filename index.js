@@ -1,6 +1,7 @@
 module.exports = function reactDeferredChildrenPlugin(babel) {
+  var t = babel.types;
+
   return {
-    inherits: require('@babel/plugin-syntax-jsx'),
     visitor: {
       JSXElement: function(path, state) {
         var elements = state.opts.elements;
@@ -11,13 +12,13 @@ module.exports = function reactDeferredChildrenPlugin(babel) {
           );
         }
 
-        var nodeName = path.node.openingElement.name.name;
+        var openingElement = path.node.openingElement;
 
-        if (!elements.includes(nodeName)) {
+        if (!elements.includes(openingElement.name.name)) {
           return;
         }
 
-        var children = babel.types.react.buildChildren(path.node);
+        var children = t.react.buildChildren(path.node);
 
         if (
           !children ||
@@ -30,13 +31,15 @@ module.exports = function reactDeferredChildrenPlugin(babel) {
         var expression =
           children.length === 1
             ? children[0]
-            : babel.types.jSXFragment(
-                babel.types.jSXOpeningFragment(),
-                babel.types.jSXClosingFragment(),
+            : t.jSXFragment(
+                t.jSXOpeningFragment(),
+                t.jSXClosingFragment(),
                 children,
               );
 
-        path.replaceWith(babel.types.arrowFunctionExpression([], expression));
+        path.node.children = [
+          t.jSXExpressionContainer(t.arrowFunctionExpression([], expression)),
+        ];
       },
     },
   };

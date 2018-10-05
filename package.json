@@ -7,7 +7,6 @@
   "author": "Nathan Harper <nathan.sam.harper@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-syntax-jsx": "^7.0.0"
+    "@babel/core": "^7.1.2"
   }
 }
