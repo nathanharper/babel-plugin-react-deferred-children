@@ -7,7 +7,7 @@ module.exports = function reactDeferredChildrenPlugin(babel) {
 
         if (!elements || !Array.isArray(elements) || elements.length === 0) {
           throw Error(
-            'react-deferred-children requires an array for the "elements" option.',
+            'babel-plugin-react-deferred-children requires an array for the "elements" option.',
           );
         }
 
