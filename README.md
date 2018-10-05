@@ -11,7 +11,7 @@ plugins: [
 ]
 ```
 
-## What it do
+## What it does
 In:
 ```
 <If condition={false}>
