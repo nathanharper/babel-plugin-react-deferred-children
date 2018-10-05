@@ -1,0 +1,13 @@
+{
+  "name": "react-deferred-children",
+  "version": "1.0.0",
+  "description": "Defer the evaluation of children for specific React components without function syntax.",
+  "main": "index.js",
+  "repository": "git@github.com:nathanharper/react-deferred-children.git",
+  "author": "Nathan Harper <nathan.sam.harper@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-syntax-jsx": "^7.0.0"
+  }
+}
