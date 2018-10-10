@@ -1,3 +1,11 @@
+var childTypes = [
+  'JSXText',
+  'JSXExpressionContainer',
+  'JSXSpreadChild',
+  'JSXElement',
+  'JSXFragment',
+];
+
 module.exports = function reactDeferredChildrenPlugin(babel) {
   var t = babel.types;
 
@@ -5,20 +13,18 @@ module.exports = function reactDeferredChildrenPlugin(babel) {
     visitor: {
       JSXElement: function(path, state) {
         var elements = state.opts.elements;
-
-        if (!elements || !Array.isArray(elements) || elements.length === 0) {
-          throw Error(
-            'babel-plugin-react-deferred-children requires an array for the "elements" option.',
-          );
-        }
-
         var openingElement = path.node.openingElement;
 
         if (!elements.includes(openingElement.name.name)) {
           return;
         }
 
-        var children = t.react.buildChildren(path.node);
+        var children = t.react.buildChildren(path.node).map(function(child) {
+          if (childTypes.includes(child.type)) {
+            return child;
+          }
+          return t.jSXExpressionContainer(child);
+        });
 
         if (
           !children ||
