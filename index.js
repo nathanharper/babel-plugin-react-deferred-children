@@ -19,12 +19,7 @@ module.exports = function reactDeferredChildrenPlugin(babel) {
           return;
         }
 
-        var children = t.react.buildChildren(path.node).map(function(child) {
-          if (childTypes.includes(child.type)) {
-            return child;
-          }
-          return t.jSXExpressionContainer(child);
-        });
+        var children = t.react.buildChildren(path.node);
 
         if (
           !children ||
@@ -40,7 +35,12 @@ module.exports = function reactDeferredChildrenPlugin(babel) {
             : t.jSXFragment(
                 t.jSXOpeningFragment(),
                 t.jSXClosingFragment(),
-                children,
+                children.map(function(child) {
+                  if (childTypes.includes(child.type)) {
+                    return child;
+                  }
+                  return t.jSXExpressionContainer(child);
+                }),
               );
 
         path.node.children = [
