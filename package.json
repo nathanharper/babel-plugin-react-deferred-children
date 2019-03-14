@@ -8,5 +8,15 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.1.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-plugin-tester": "^6.0.0",
+    "jest": "^24.5.0",
+    "react": "^16.8.4"
+  },
+  "scripts": {
+    "test": "jest ./tests/test.js"
   }
 }
